@@ -83,6 +83,7 @@ body {
   z-index: 10; /* Ensure it stays above other elements */
 }
 
+
 .fixed-sidebar a {
   display: block;
   padding: 10px;
@@ -113,4 +114,66 @@ main {
 footer {
   margin: 0;
   padding: 0;
+}
+
+/* Light mode design */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.blob-mask {
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23FF0066' d='M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,88.5,-0.9C87,14.5,81.4,29,72.4,41.2C63.4,53.4,51,63.2,37.3,70.9C23.6,78.5,8.7,84, -6.8,85.2C-22.3,86.4,-38.4,83.2,-51.7,75.4C-65.1,67.6,-75.7,55.1,-82.4,41C-89.1,26.9,-91.9,11.2,-89.7,-3.8C-87.5,-18.8,-80.3,-33.1,-70.4,-44.9C-60.5,-56.7,-47.9,-66,-34.5,-73.6C-21.1,-81.1,-6.9,-86.8,7.8,-88.2C22.6,-89.5,30.6,-83.6,44.7,-76.4Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+  mask-size: cover;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23FF0066' d='M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,88.5,-0.9C87,14.5,81.4,29,72.4,41.2C63.4,53.4,51,63.2,37.3,70.9C23.6,78.5,8.7,84, -6.8,85.2C-22.3,86.4,-38.4,83.2,-51.7,75.4C-65.1,67.6,-75.7,55.1,-82.4,41C-89.1,26.9,-91.9,11.2,-89.7,-3.8C-87.5,-18.8,-80.3,-33.1,-70.4,-44.9C-60.5,-56.7,-47.9,-66,-34.5,-73.6C-21.1,-81.1,-6.9,-86.8,7.8,-88.2C22.6,-89.5,30.6,-83.6,44.7,-76.4Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+}
+
+.squish-btn:active {
+  transform: scaleX(1.05) scaleY(0.95);
+  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.custom-cursor {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e34989;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  mix-blend-mode: difference;
+}
+
+.skill-chip {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.skill-chip:hover {
+  transform: translateY(-4px) rotate(2deg);
+}
+
+.project-card:hover .glow {
+  opacity: 1;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+.float-anim { animation: float 6s ease-in-out infinite; }
+
+.line-input {
+  border: none;
+  border-bottom: 2px solid currentColor;
+  background: transparent;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.line-input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #e34989;
+  border-bottom-width: 4px;
 }
