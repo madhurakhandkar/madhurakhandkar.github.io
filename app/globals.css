@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .text-custom-large {
+    font-size: 49px; /* Adjust this value to achieve the desired size */
+  }
+  .text-balance {
+    text-wrap: balance;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+
+  /* Gradient text animation utility */
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .gradient-text {
+    background: linear-gradient(270deg, #86e3ce, #6a5acd, #ff6f61, #ffab40, #ff0000);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  .paper-background {
+    background-color: #FAFAF9; /* Base color */
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.05), transparent 10%),
+        radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.05), transparent 10%),
+        radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.05), transparent 10%);
+    background-size: 10% 10%; /* Adjust this for more or less noise */
+    background-repeat: no-repeat;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap');
+
+.quote {
+  font-family: 'Covered By Your Grace', cursive; /* Use cursive as a fallback */
+  font-size: 24px; /* Adjust as needed */
+  text-align: center; /* Center the text */
+}
+/* Fixed Sidebar Styles */
+.fixed-sidebar {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 150px; /* Width of the sidebar */
+  z-index: 10; /* Ensure it stays above other elements */
+}
+
+.fixed-sidebar a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #171717; /* Default text color */
+  transition: background-color 0.3s;
+}
+
+.fixed-sidebar a.active {
+  background-color: #6a5acd; /* Highlight color */
+  color: #ffffff; /* Change text color on active */
+}
+
+.fixed-sidebar a:hover {
+  background-color: rgba(106, 90, 205, 0.2); /* Hover effect */
+}
+
+#root, #__next {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
+footer {
+  margin: 0;
+  padding: 0;
+}
