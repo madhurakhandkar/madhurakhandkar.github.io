@@ -83,12 +83,35 @@
     const [contactName, setContactName] = useState("");
     const [contactEmail, setContactEmail] = useState("");
     const [contactMessage, setContactMessage] = useState("");
+    const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-    const handleContactSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleContactSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const subject = encodeURIComponent(`Portfolio message from ${contactName || "a visitor"}`);
-      const body = encodeURIComponent(`${contactMessage}\n\n— ${contactName}${contactEmail ? ` (${contactEmail})` : ""}`);
-      window.location.href = `mailto:madhura.k648@gmail.com?subject=${subject}&body=${body}`;
+      setContactStatus("sending");
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: "e378618d-618a-494e-89b5-ad4de5f49171",
+            subject: `Portfolio message from ${contactName || "a visitor"}`,
+            name: contactName,
+            email: contactEmail,
+            message: contactMessage,
+          }),
+        });
+        const result = await res.json();
+        if (result.success) {
+          setContactStatus("success");
+          setContactName("");
+          setContactEmail("");
+          setContactMessage("");
+        } else {
+          setContactStatus("error");
+        }
+      } catch {
+        setContactStatus("error");
+      }
     };
 
     useEffect(() => {
@@ -136,6 +159,7 @@
           setContactEmail={setContactEmail}
           contactMessage={contactMessage}
           setContactMessage={setContactMessage}
+          contactStatus={contactStatus}
           handleContactSubmit={handleContactSubmit}
           scrollToSection={scrollToSection}
           fontClassName={`${spaceGrotesk.variable} ${poppins.variable} ${spaceGrotesk.className}`}
@@ -198,18 +222,18 @@
                         <h1 className="font-display text-headline-lg-mobile md:text-display leading-tight">
                           Building    <span className="text-wild-strawberry italic">intelligent</span> tools
                         </h1>
-                        <div className={`${poppins.className} space-y-4`}>
+                        <div className={`${poppins.className} space-y-2`}>
                           <p className="text-base md:text-lg leading-relaxed text-[#fefeff] max-w-xl">
-                            Senior studying Computer Science at Penn State, graduating December 2026. Currently a
-                            Software Engineering Intern at Mile6, previously at Penn State Libraries.
+                            Graduating December 2026, majoring in Computer Science at Penn State. Looking to grow into full-stack and AI roles.
+                          </p>
+                          <p className="text-base md:text-lg leading-relaxed text-[#fefeff] max-w-xl">
+                             Currently a SWE Intern  at Mile6 and previous SWE Intern for Penn State. 
+                          </p>
+                          <p className="text-base md:text-lg leading-relaxed text-[#fefeff] max-w-xl">
+                            Apart from that, I'm the Outreach Director for Penn State&apos;s AWS Student Builder Group.
                           </p>
 
-                          <p className="text-base md:text-lg leading-relaxed text-[#fefeff] max-w-xl">
-                            Looking to grow into backend, AI, and full-stack roles. Outreach Director for Penn
-                            State&apos;s AWS Cloud Club.
-                          </p>
-
-                          <div className="flex flex-wrap gap-4">
+                          <div className="flex flex-wrap gap-4 pt-4">
                             <motion.a
                               href="/Madhura_K_Resume.pdf"
                               download
@@ -500,6 +524,7 @@
                           <input
                             id="contact-name"
                             type="text"
+                            required
                             value={contactName}
                             onChange={(e) => setContactName(e.target.value)}
                             placeholder="Your name"
@@ -511,6 +536,7 @@
                           <input
                             id="contact-email"
                             type="email"
+                            required
                             value={contactEmail}
                             onChange={(e) => setContactEmail(e.target.value)}
                             placeholder="Email"
@@ -526,17 +552,25 @@
                           onChange={(e) => setContactMessage(e.target.value)}
                           placeholder="Your message goes here. Ask me anything"
                           rows={6}
+                          required
                           className="w-full bg-transparent border border-[#969696] rounded-lg px-4 py-3 text-sm text-[#fefeff] placeholder:text-[#6b6b6b] focus:outline-none focus:border-[#fefeff] transition-colors resize-none"
                         />
                       </div>
                       <motion.button
                         type="submit"
-                        className="w-full border border-[#969696] rounded-lg py-4 text-sm font-medium text-[#fefeff] hover:border-[#fefeff] transition-colors"
+                        disabled={contactStatus === "sending"}
+                        className="w-full border border-[#969696] rounded-lg py-4 text-sm font-medium text-[#fefeff] hover:border-[#fefeff] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        Send Email &nbsp;&rarr;
+                        {contactStatus === "sending" ? "Sending…" : <>Send Email &nbsp;&rarr;</>}
                       </motion.button>
+                      {contactStatus === "success" && (
+                        <p className="text-sm text-center text-green-400">Thanks! Your message has been sent.</p>
+                      )}
+                      {contactStatus === "error" && (
+                        <p className="text-sm text-center text-red-400">Something went wrong. Please try again or email me directly.</p>
+                      )}
                     </motion.form>
                   </motion.div>
                 </section>
@@ -630,6 +664,7 @@
     setContactEmail: (v: string) => void;
     contactMessage: string;
     setContactMessage: (v: string) => void;
+    contactStatus: "idle" | "sending" | "success" | "error";
     handleContactSubmit: (e: FormEvent<HTMLFormElement>) => void;
     scrollToSection: (id: string) => void;
     fontClassName: string;
@@ -646,6 +681,7 @@
     setContactEmail,
     contactMessage,
     setContactMessage,
+    contactStatus,
     handleContactSubmit,
     scrollToSection,
     fontClassName,
@@ -738,12 +774,17 @@
                 <h1 className="font-display text-headline-lg-mobile md:text-display text-on-surface leading-tight">
                   Building <span className="text-wild-strawberry italic">intelligent</span> tools
                 </h1>
-                <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                  Senior studying Computer Science at Penn State, graduating December 2026. Currently a Software Engineering Intern at Mile6, previously at Penn State Libraries.
-                </p>
-                <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                  Looking to grow into backend, AI, and full-stack roles. Outreach Director for Penn State&apos;s AWS Cloud Club.
-                </p>
+                <div className="space-y-2">
+                  <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    Graduating December 2026, majoring in Computer Science at Penn State. Looking to grow into full-stack and AI roles.
+                  </p>
+                  <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    Currently a SWE Intern  at Mile6 and previous SWE Intern for Penn State.
+                  </p>
+                  <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    Apart from that, I&apos;m the Outreach Director for Penn State&apos;s AWS Student Builder Group.
+                  </p>
+                </div>
                 <div className="flex flex-wrap gap-4 pt-4">
                   <a className="squish-btn px-8 py-4 bg-wild-strawberry text-white rounded-full font-button text-button shadow-lg shadow-wild-strawberry/20 flex items-center gap-2" href="/Madhura_K_Resume.pdf" download>
                     Download Resume
@@ -987,6 +1028,7 @@
                       className="w-full bg-transparent border border-outline-variant rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:border-on-surface transition-colors"
                       placeholder="Your name"
                       type="text"
+                      required
                       value={contactName}
                       onChange={(e) => setContactName(e.target.value)}
                     />
@@ -998,6 +1040,7 @@
                       className="w-full bg-transparent border border-outline-variant rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:border-on-surface transition-colors"
                       placeholder="Email"
                       type="email"
+                      required
                       value={contactEmail}
                       onChange={(e) => setContactEmail(e.target.value)}
                     />
@@ -1010,18 +1053,26 @@
                     className="w-full bg-transparent border border-outline-variant rounded-lg px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:border-on-surface transition-colors resize-none"
                     placeholder="Your message goes here. Ask me anything"
                     rows={6}
+                    required
                     value={contactMessage}
                     onChange={(e) => setContactMessage(e.target.value)}
                   />
                 </div>
                 <motion.button
-                  className="w-full border border-outline-variant rounded-lg py-4 text-sm font-medium text-on-surface hover:border-on-surface transition-colors"
+                  className="w-full border border-outline-variant rounded-lg py-4 text-sm font-medium text-on-surface hover:border-on-surface transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
                   type="submit"
+                  disabled={contactStatus === "sending"}
                 >
-                  Send Email &nbsp;&rarr;
+                  {contactStatus === "sending" ? "Sending…" : <>Send Email &nbsp;&rarr;</>}
                 </motion.button>
+                {contactStatus === "success" && (
+                  <p className="text-sm text-center text-green-600">Thanks! Your message has been sent.</p>
+                )}
+                {contactStatus === "error" && (
+                  <p className="text-sm text-center text-red-600">Something went wrong. Please try again or email me directly.</p>
+                )}
               </motion.form>
             </motion.div>
           </section>
