@@ -37,16 +37,60 @@
   };
 
   const skillGroups = [
-    { label: "Languages", items: ["Java", "Python", "PHP", "C++", "JavaScript", "SQL", "HTML/CSS"] },
-    { label: "Frameworks & Tools", items: ["FastAPI", "React", "Laravel", "Ruby on Rails", "Git", "IntelliJ", "PyCharm"] },
-    { label: "Cloud", items: ["AWS Bedrock", "GCP"] },
-    { label: "Libraries", items: ["NumPy", "Pandas", "SciPy", "Matplotlib", "TensorFlow", "Scrapy", "Kivy"] }
+    { label: "Languages", items: ["Python", "Java", "JavaScript", "PHP", "Ruby", "SQL", "C++"] },
+    { label: "Frameworks", items: ["React", "Laravel", "FastAPI", "Ruby on Rails", "Node.js"] },
+    { label: "Cloud & Databases", items: ["AWS Bedrock", "GCP", "MySQL", "PostgreSQL"] },
+    { label: "Tools & Libraries", items: ["Git", "NumPy", "Pandas", "SciPy", "Matplotlib"] }
+  ];
+
+  const experiences = [
+    {
+      title: "Software Engineering Intern - Mile6",
+      dates: "May 2026 - August 2026",
+      location: "Philadelphia, PA",
+      bullets: [
+        "Built an automated B2B lead generation tool in Laravel delivering PDF reports and follow-up email priority from a 30+ question client assessment.",
+        "Resolved a week-long production outage misreported as an email issue by tracing 3 independent root causes across the PDF generation pipeline.",
+        "Fixed an inventory bug affecting 1,000+ products across English and French translations by rewriting frontend display logic and correcting translation mapping."
+      ]
+    },
+    {
+      title: "Software Engineering Intern - Penn State",
+      dates: "October 2025 - May 2026",
+      location: "University Park, PA",
+      bullets: [
+        "Consolidated data processing across distributed student and faculty systems by developing a Ruby on Rails API handling 50,000+ educational records.",
+        "Reduced manual processing by 60% by automating institutional data imports into Activity Insight with Ruby and XML export logic.",
+        "Identified and resolved 20+ bugs before release by leading PR reviews for the API and XML pipeline.",
+        "Shipped features using test-driven development in an Agile team across coding, QA, and deployment."
+      ]
+    },
+    {
+      title: "Undergraduate Researcher - Penn State",
+      dates: "May 2024 - December 2024",
+      location: "Middletown, PA",
+      bullets: [
+        "Improved biomechanical movement accuracy by 25% by engineering a motorized 3D-printed throat model.",
+        "Simulated anatomically accurate muscle contractions by programming Python-controlled servo systems.",
+        "Designed CAD anatomical models and optimized motor placement for simulation purposes."
+      ]
+    },
+    {
+      title: "Outreach Director - AWS Builder Club",
+      dates: "September 2025 - Present",
+      location: "University Park, PA",
+      bullets: [
+        "Expanded event participation from 20 to 100+ students by partnering with 20+ technical student organizations.",
+        "Coordinate technical outreach by organizing 3 AWS-focused workshops and speaker sessions.",
+        "Connect club members with industry professionals, increasing student exposure to new AWS tools."
+      ]
+    }
   ];
 
   const workProjects = [
     {
       title: "DigiLib",
-      description: "A RAG-powered academic research tool that retrieves and ranks credible sources using conversational AI, cutting research time by 40% — winner of 2nd place ($2,000) in the Bardusch Family IdeaMakers Challenge",
+      description: "A RAG-powered academic research tool that retrieves and ranks credible sources using conversational AI, with live OpenAlex search that pulls only abstracts to avoid copyrighted material — winner of 2nd place ($2,000) in the Bardusch Family IdeaMakers Challenge",
       tags: ["Python", "AWS Bedrock", "React", "LLaMA 3"],
       link: "https://www.digilib.site/",
       modal: undefined as "creditwise" | undefined,
@@ -56,7 +100,7 @@
     },
     {
       title: "AI Voice Copilot",
-      description: "An AI voice copilot providing real-time guidance on web platforms, using AWS Bedrock with Anthropic models to deliver recommendations at 800ms latency",
+      description: "An AI voice copilot that guides users through services on web platforms, using AWS Bedrock with Anthropic models to deliver recommendations at 800ms latency while streaming user interactions across 3+ sites to FastAPI",
       tags: ["Python", "JavaScript", "React", "FastAPI", "AWS Bedrock"],
       link: "https://github.com/madhurakhandkar",
       modal: undefined as "creditwise" | undefined,
@@ -66,7 +110,7 @@
     },
     {
       title: "Creditwise",
-      description: "A web application enabling transfer students to verify credit transfer eligibility across institutions, centralizing data for 30+ course equivalencies across 3 universities",
+      description: "A web application enabling transfer students to verify credit transfer eligibility across institutions, cutting course search time by 30% and supporting 30+ course equivalencies across 3 universities",
       tags: ["React", "Firebase", "Figma"],
       link: "https://github.com/madhurakhandkar",
       modal: "creditwise" as const,
@@ -224,13 +268,13 @@
                         </h1>
                         <div className={`${poppins.className} space-y-2`}>
                           <p className="text-base md:text-lg leading-relaxed text-[#fefeff] max-w-xl">
-                            Graduating December 2026, majoring in Computer Science at Penn State. Looking to grow into full-stack and AI roles.
+                            Graduating December 2026, majoring in Computer Science at Penn State. Looking to grow into full stack, growth, and AI roles.
                           </p>
                           <p className="text-base md:text-lg leading-relaxed text-[#fefeff] max-w-xl">
-                             Currently a SWE Intern  at Mile6 and previous SWE Intern for Penn State. 
+                             Previously a SWE Intern at Mile6 and at Penn State.
                           </p>
                           <p className="text-base md:text-lg leading-relaxed text-[#fefeff] max-w-xl">
-                            Apart from that, I'm the Outreach Director for Penn State&apos;s AWS Student Builder Group.
+                            Apart from that, I'm the Outreach Director for Penn State&apos;s AWS Builder Club.
                           </p>
 
                           <div className="flex flex-wrap gap-4 pt-4">
@@ -334,74 +378,19 @@
                   >
                     <motion.h2 variants={fadeUp} className="text-4xl md:text-7xl font-medium mb-8 max-w-2xl">Experience</motion.h2>
                     <div className="max-w-2xl mx-auto space-y-16">
-                      <motion.div variants={staggerContainer}>
-                        <motion.div variants={fadeUp} className="space-y-2 mb-4">
-                  
-                          <h3 className="text-2xl md:text-3xl font-medium text-[#fefeff]">Software Engineering Intern - Mile6</h3>
-                          <p className="text-sm text-[#fefeff]">May 2026 - Present &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Philadelphia, PA</p>
+                      {experiences.map((exp) => (
+                        <motion.div key={exp.title} variants={staggerContainer}>
+                          <motion.div variants={fadeUp} className="space-y-2 mb-4">
+                            <h3 className="text-2xl md:text-3xl font-medium text-[#fefeff]">{exp.title}</h3>
+                            <p className="text-sm text-[#fefeff]">{exp.dates} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{exp.location}</p>
+                          </motion.div>
+                          <ul className="space-y-2 list-disc list-outside pl-5 text-sm text-[#969696]">
+                            {exp.bullets.map((bullet) => (
+                              <motion.li key={bullet} variants={fadeUp}>{bullet}</motion.li>
+                            ))}
+                          </ul>
                         </motion.div>
-                        <ul className="space-y-2 list-disc list-outside pl-5 text-sm text-[#969696]">
-                          <motion.li variants={fadeUp}>
-                            Eliminated manual grading, saving 6+ hours a week, through a Laravel scoring engine
-                            evaluating 140 answer paths across 30+ assessment questions.
-                          </motion.li>
-                          <motion.li variants={fadeUp}>
-                            Built a React/Vite frontend integrated with Laravel APIs, enabling dynamic assessment
-                            workflows and progress tracking for 10+ clients.
-                          </motion.li>
-                          <motion.li variants={fadeUp}>
-                            Streamlined client reporting by automating PDF generation and email delivery through
-                            background jobs, saving 3–4 hours of manual effort weekly.
-                          </motion.li>
-                        </ul>
-                      </motion.div>
-
-                      <motion.div variants={staggerContainer}>
-                        <motion.div variants={fadeUp} className="space-y-2 mb-4">
-                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                            <h3 className="text-2xl md:text-3xl font-medium text-[#fefeff]">Software Engineering Intern - Penn State</h3>
-                          </div>
-                          <p className="text-sm text-[#fefeff]">October 2025 - May 2026 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State College, PA</p>
-                        </motion.div>
-                        <ul className="space-y-2 list-disc list-outside pl-5 text-sm text-[#969696]">
-                          <motion.li variants={fadeUp}>
-                            Consolidated institutional data processing by developing a Ruby on Rails API that handled
-                            50,000+ educational records across multiple systems.
-                          </motion.li>
-                          <motion.li variants={fadeUp}>
-                            Reduced manual processing by 60% by automating institutional data imports into Activity
-                            Insight with Ruby and XML export logic.
-                          </motion.li>
-                          <motion.li variants={fadeUp}>
-                            Led PR reviews for the API and XML pipeline, catching 3–4 bugs and preventing merge
-                            conflicts before release.
-                          </motion.li>
-                        </ul>
-                      </motion.div>
-
-                      <motion.div variants={staggerContainer}>
-                        <motion.div variants={fadeUp} className="space-y-2 mb-4">
-                          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                            <h3 className="text-2xl md:text-3xl font-medium text-[#fefeff]">Undergraduate Researcher - Penn State</h3>
-                          </div>
-                          <p className="text-sm text-[#fefeff]">May 2024 - December 2026 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Middletown, PA</p>
-                        </motion.div>
-                        <ul className="space-y-2 list-disc list-outside pl-5 text-sm text-[#969696]">
-                          <motion.li variants={fadeUp}>
-                            Engineered a motorized 3D-printed throat model that improved biomechanical movement
-                            accuracy by 25%.
-                            
-                          </motion.li>
-                          <motion.li variants={fadeUp}>
-                            Programmed Python-controlled servo systems to simulate anatomically accurate muscle
-                            contractions.
-                          </motion.li>
-                          <motion.li variants={fadeUp}>
-                            Designed CAD-based anatomical models and optimized motor placement to satisfy simulation
-                            requirements.
-                          </motion.li>
-                        </ul>
-                      </motion.div>
+                      ))}
                     </div>
                   </motion.div>
                 </section>
@@ -776,13 +765,13 @@
                 </h1>
                 <div className="space-y-2">
                   <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                    Graduating December 2026, majoring in Computer Science at Penn State. Looking to grow into full-stack and AI roles.
+                    Graduating December 2026, majoring in Computer Science at Penn State. Looking to grow into full stack, growth, and AI roles.
                   </p>
                   <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                    Currently a SWE Intern  at Mile6 and previous SWE Intern for Penn State.
+                    Previously a SWE Intern at Mile6 and at Penn State.
                   </p>
                   <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                    Apart from that, I&apos;m the Outreach Director for Penn State&apos;s AWS Student Builder Group.
+                    Apart from that, I&apos;m the Outreach Director for Penn State&apos;s AWS Builder Club.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-4 pt-4">
@@ -852,68 +841,19 @@
             >
               <motion.h2 variants={fadeUp} className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-16 max-w-2xl">Experience</motion.h2>
               <div className="max-w-2xl mx-auto space-y-16">
-                <motion.div variants={staggerContainer}>
-                  <motion.div variants={fadeUp} className="space-y-2 mb-4">
-                    <h3 className="text-2xl md:text-3xl font-medium text-on-surface">Software Engineering Intern - Mile6</h3>
-                    <p className="text-sm text-on-surface">May 2026 - Present &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Philadelphia, PA</p>
+                {experiences.map((exp) => (
+                  <motion.div key={exp.title} variants={staggerContainer}>
+                    <motion.div variants={fadeUp} className="space-y-2 mb-4">
+                      <h3 className="text-2xl md:text-3xl font-medium text-on-surface">{exp.title}</h3>
+                      <p className="text-sm text-on-surface">{exp.dates} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{exp.location}</p>
+                    </motion.div>
+                    <ul className="space-y-2 list-disc list-outside pl-5 text-sm text-on-surface-variant marker:text-wild-strawberry">
+                      {exp.bullets.map((bullet) => (
+                        <motion.li key={bullet} variants={fadeUp}>{bullet}</motion.li>
+                      ))}
+                    </ul>
                   </motion.div>
-                  <ul className="space-y-2 list-disc list-outside pl-5 text-sm text-on-surface-variant marker:text-wild-strawberry">
-                    <motion.li variants={fadeUp}>
-                      Eliminated manual grading, saving 6+ hours a week, through a Laravel scoring engine
-                      evaluating 140 answer paths across 30+ assessment questions.
-                    </motion.li>
-                    <motion.li variants={fadeUp}>
-                      Built a React/Vite frontend integrated with Laravel APIs, enabling dynamic assessment
-                      workflows and progress tracking for 10+ clients.
-                    </motion.li>
-                    <motion.li variants={fadeUp}>
-                      Streamlined client reporting by automating PDF generation and email delivery through
-                      background jobs, saving 3–4 hours of manual effort weekly.
-                    </motion.li>
-                  </ul>
-                </motion.div>
-
-                <motion.div variants={staggerContainer}>
-                  <motion.div variants={fadeUp} className="space-y-2 mb-4">
-                    <h3 className="text-2xl md:text-3xl font-medium text-on-surface">Software Engineering Intern - Penn State</h3>
-                    <p className="text-sm text-on-surface">October 2025 - May 2026 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State College, PA</p>
-                  </motion.div>
-                  <ul className="space-y-2 list-disc list-outside pl-5 text-sm text-on-surface-variant marker:text-wild-strawberry">
-                    <motion.li variants={fadeUp}>
-                      Consolidated institutional data processing by developing a Ruby on Rails API that handled
-                      50,000+ educational records across multiple systems.
-                    </motion.li>
-                    <motion.li variants={fadeUp}>
-                      Reduced manual processing by 60% by automating institutional data imports into Activity
-                      Insight with Ruby and XML export logic.
-                    </motion.li>
-                    <motion.li variants={fadeUp}>
-                      Led PR reviews for the API and XML pipeline, catching 3–4 bugs and preventing merge
-                      conflicts before release.
-                    </motion.li>
-                  </ul>
-                </motion.div>
-
-                <motion.div variants={staggerContainer}>
-                  <motion.div variants={fadeUp} className="space-y-2 mb-4">
-                    <h3 className="text-2xl md:text-3xl font-medium text-on-surface">Undergraduate Researcher - Penn State</h3>
-                    <p className="text-sm text-on-surface">May 2024 - December 2026 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Middletown, PA</p>
-                  </motion.div>
-                  <ul className="space-y-2 list-disc list-outside pl-5 text-sm text-on-surface-variant marker:text-wild-strawberry">
-                    <motion.li variants={fadeUp}>
-                      Engineered a motorized 3D-printed throat model that improved biomechanical movement
-                      accuracy by 25%.
-                    </motion.li>
-                    <motion.li variants={fadeUp}>
-                      Programmed Python-controlled servo systems to simulate anatomically accurate muscle
-                      contractions.
-                    </motion.li>
-                    <motion.li variants={fadeUp}>
-                      Designed CAD-based anatomical models and optimized motor placement to satisfy simulation
-                      requirements.
-                    </motion.li>
-                  </ul>
-                </motion.div>
+                ))}
               </div>
             </motion.div>
           </section>
